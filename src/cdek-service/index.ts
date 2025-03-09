@@ -11,18 +11,21 @@ import {
   CdekTariffResponse,
 } from "./types";
 import { CdekLocationService } from "./location/location.service";
+import { CdekCheckService } from "./check/check.service";
 
 export class Cdek {
   public authService: CdekAuthService;
   public tariffService: CdekTariffService;
   public orderService: CdekOrderService;
   public locationService: CdekLocationService;
+  public checkService: CdekCheckService;
 
   constructor(clientId: string, clientSecret: string, baseUrl: string) {
     this.authService = new CdekAuthService(clientId, clientSecret, baseUrl);
     this.tariffService = new CdekTariffService(this.authService);
     this.orderService = new CdekOrderService(this.authService);
     this.locationService = new CdekLocationService(this.authService);
+    this.checkService = new CdekCheckService(this.authService);
   }
 
   public async getTariff(
@@ -84,4 +87,12 @@ export class Cdek {
   }): Promise<any> {
     return await this.locationService.getRegionList(request);
   }*/
+
+    public async getCheckInfo(request: {
+      order_uuid: UUID;
+      cdek_number?: string;
+      date?: string;
+    }): Promise<any> {
+      return await this.checkService.getCheckInfo(request);
+    }
 }

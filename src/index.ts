@@ -241,6 +241,22 @@ async function testgetCitysList() {
     console.error(error);
   }
 }*/
+
+async function testGetCheckInfo() {
+  logInfo("Ищем информацию о чеке...");
+  try {
+    const registeredOrder = await cdek.getCheckInfo({
+      order_uuid: "72753031-e66b-4146-ab8c-52179ef4020a",
+    });
+    logSuccess("Информация о чеке найдена!!");
+    logInfo("Ответ от API - ");
+    console.table(registeredOrder);
+  } catch (error: any) {
+    logError("Ошибка при получении информации о чеке!");
+    console.error(error);
+  }
+}
+
 // 🚀 Запуск всех тестов
 async function runTests() {
   console.log(chalk.yellow.bold("\n🚀 Запуск тестов CDEK-SERVICE...\n"));
@@ -250,6 +266,7 @@ async function runTests() {
   await testGetLocationByCity();
   await testgetCitysList();
   //await testgetRegionList();
+  await testGetCheckInfo();
   await testUpdateOrder();
   await testGetByUUID();
 }
