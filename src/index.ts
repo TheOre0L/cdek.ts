@@ -196,7 +196,11 @@ async function testGetLocationByCity() {
     console.table(registeredOrder);
   } catch (error: any) {
     logError("Ошибка при получении локации!");
-    console.error(error);
+    if (
+      error.message ===
+      "Заказ с таким uuid (095be615-a8ad-4c33-8e9c-c7612fbf6c9f) не найден!"
+    )
+      console.error(error);
   }
 }
 
