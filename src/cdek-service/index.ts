@@ -50,6 +50,14 @@ export class Cdek {
     return await this.orderService.getOrderByUUID(uuid);
   }
 
+  public async removeOrder(uuid: UUID): Promise<any> {
+    return await this.orderService.remove(uuid);
+  }
+
+  public async registrationOfRefusal(uuid: UUID): Promise<any> {
+    return await this.orderService.registrationOfRefusal(uuid);
+  }
+
   public async getLocationsByCity(request: {
     name: string;
     country_code?: string;

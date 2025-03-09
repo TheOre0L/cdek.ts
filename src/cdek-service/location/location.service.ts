@@ -17,14 +17,10 @@ export class CdekLocationService {
     name: string;
     country_code?: string;
   }): Promise<{ city_uuid: UUID; code: number; full_name: string }[]> {
-    const { data } = await this.client.get(
-      `/location/suggest/cities`,
-
-      {
-        headers: { Authorization: `Bearer ${this.authService.getToken()}` },
-        params: { name: request.name, country_code: request.country_code },
-      }
-    );
+    const { data } = await this.client.get(`/location/suggest/cities`, {
+      headers: { Authorization: `Bearer ${this.authService.getToken()}` },
+      params: { name: request.name, country_code: request.country_code },
+    });
     return data as any;
   }
 }

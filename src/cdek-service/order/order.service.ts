@@ -58,6 +58,60 @@ export class CdekOrderService {
     }
   }
 
+  public async registrationOfRefusal(uuid: UUID) {
+    await this.authService.authenticate();
+    try {
+      const response = await this.client.post<any>(`/orders/${uuid}/refusal`, {
+        headers: { Authorization: `Bearer ${this.authService.getToken()}` },
+      });
+      return response.data;
+    } catch (error: any) {
+      if (
+        error.response.data.requests?.[0]?.errors[0].code ===
+        "v2_entity_not_found"
+      ) {
+        throw new Error(`Заказ с таким uuid (${uuid}) не найден!`);
+      }
+      if (error.response) {
+        throw new Error(
+          JSON.stringify(error.response.data.requests?.[0]?.errors, null, 2)
+        );
+      } else {
+        throw new Error(`Ошибка запроса: ${error.message}`);
+      }
+    }
+  }
+
+  /**
+   * @async
+   * @param uuid
+   * @returns {orderInfo}
+   */
+
+  public async remove(uuid: UUID) {
+    await this.authService.authenticate();
+    try {
+      const response = await this.client.delete<any>(`/orders/${uuid}`, {
+        headers: { Authorization: `Bearer ${this.authService.getToken()}` },
+      });
+      return response.data;
+    } catch (error: any) {
+      if (
+        error.response.data.requests?.[0]?.errors[0].code ===
+        "v2_entity_not_found"
+      ) {
+        throw new Error(`Заказ с таким uuid (${uuid}) не найден!`);
+      }
+      if (error.response) {
+        throw new Error(
+          JSON.stringify(error.response.data.requests?.[0]?.errors, null, 2)
+        );
+      } else {
+        throw new Error(`Ошибка запроса: ${error.message}`);
+      }
+    }
+  }
+
   public async getOrderByUUID(uuid: UUID) {
     await this.authService.authenticate();
     try {
