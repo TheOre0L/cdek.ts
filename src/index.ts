@@ -199,6 +199,44 @@ async function testGetLocationByCity() {
     console.error(error);
   }
 }
+
+async function testgetCitysList() {
+  logInfo("Ищем города...");
+  try {
+    const registeredOrder = await cdek.getCitysList({
+      country_codes: ["RU"], 
+      region_code: 26, 
+      size: 10, 
+      page: 1, 
+      lang: "RU",
+    });
+    logSuccess("Города найдены!!");
+    logInfo("Ответ от API - ");
+    console.table(registeredOrder);
+  } catch (error: any) {
+    logError("Ошибка при получении городов!");
+    console.error(error);
+  }
+}
+
+//Решить проблему с регионами
+/*async function testgetRegionList() {
+  logInfo("Ищем регионы...");
+  try {
+    const registeredOrder = await cdek.getRegionList({
+      country_codes: ["RU"], 
+      size: 10, 
+      page: 1, 
+      lang: "RU",
+    });
+    logSuccess("Регионы найдены!!");
+    logInfo("Ответ от API - ");
+    console.table(registeredOrder);
+  } catch (error: any) {
+    logError("Ошибка при получении регионов!");
+    console.error(error);
+  }
+}*/
 // 🚀 Запуск всех тестов
 async function runTests() {
   console.log(chalk.yellow.bold("\n🚀 Запуск тестов CDEK-SERVICE...\n"));
@@ -206,6 +244,8 @@ async function runTests() {
   await testDeliveryPoints();
   await testCreateOrder();
   await testGetLocationByCity();
+  await testgetCitysList();
+  //await testgetRegionList();
   await testUpdateOrder();
   await testGetByUUID();
 }

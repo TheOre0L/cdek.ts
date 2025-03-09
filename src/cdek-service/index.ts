@@ -56,4 +56,24 @@ export class Cdek {
   }): Promise<any> {
     return await this.locationService.getLocationByCity(request);
   }
+
+  public async getCitysList(request: {
+    country_codes: Array<string>;
+    region_code: number;
+    size: number;
+    page: number;
+    lang: string;
+  }): Promise<any> {
+    return await this.locationService.getCitysList(request);
+  }
+
+  //Решить проблему с регионами
+  /*public async getRegionList(request: {
+    country_codes: Array<string>;
+    size: number;
+    page: number;
+    lang: string;
+  }): Promise<any> {
+    return await this.locationService.getRegionList(request);
+  }*/
 }
