@@ -1,3 +1,5 @@
+import { UUID } from "crypto";
+
 export interface RegisterOrderDto {
   type: number;
   number: string;
@@ -76,3 +78,36 @@ export interface UpdateOrderDto {
     }[];
   }[];
 }
+
+export interface RegisterOrderResponseDto {
+  entity?: {uuid: UUID}, 
+  requests: Array<{
+    request_uuid?: UUID;
+    type: string;
+    date_time: string;
+    state: string;
+    errors: Array<{
+      code: string;
+      message: string;
+    }>
+    warnings: Array<{
+      code: string;
+      message: string;
+    }>
+  }>, 
+  related_entities?: Array<{
+    uuid: UUID;
+    type: string;
+    url?: string;
+    create_time?: string;
+    cdek_number?: string;
+    date?: string;
+    time_from?: string;
+    time_to?: string;
+  }>
+}
+
+export interface UpdateOrderResponseDto extends RegisterOrderResponseDto {};
+export interface RefusalResponseDto extends RegisterOrderResponseDto {};
+export interface DeleteResponseDto extends RegisterOrderResponseDto {};
+export interface OrderByUUIDResponseDto extends RegisterOrderResponseDto {};

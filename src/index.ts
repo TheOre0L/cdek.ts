@@ -242,7 +242,8 @@ async function testgetCitysList() {
   }
 }*/
 
-async function testGetCheckInfo() {
+//По order_uuid ничего не выдаст, пока не будет базы, поэтому пока закоментил
+/*async function testGetCheckInfo() {
   logInfo("Ищем информацию о чеке...");
   try {
     const registeredOrder = await cdek.getCheckInfo({
@@ -255,7 +256,7 @@ async function testGetCheckInfo() {
     logError("Ошибка при получении информации о чеке!");
     console.error(error);
   }
-}
+}*/
 
 // 🚀 Запуск всех тестов
 async function runTests() {
@@ -266,7 +267,7 @@ async function runTests() {
   await testGetLocationByCity();
   await testgetCitysList();
   //await testgetRegionList();
-  await testGetCheckInfo();
+  //await testGetCheckInfo();
   await testUpdateOrder();
   await testGetByUUID();
 }

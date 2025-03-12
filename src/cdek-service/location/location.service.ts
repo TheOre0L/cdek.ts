@@ -1,6 +1,7 @@
 import axios from "axios";
 import { CdekAuthService } from "../auth/auth.service";
 import { UUID } from "crypto";
+import { CityListResponseDto, CitysListDto, LocationByCityDto, LocationByCityResponseDto } from "./dto/location.dto";
 
 export class CdekLocationService {
   private client: Axios.AxiosInstance;
@@ -13,32 +14,16 @@ export class CdekLocationService {
       headers: { "Content-Type": "application/json" },
     });
   }
-  public async getLocationByCity(request: {
-    name: string;
-    country_code?: string;
-  }): Promise<{ city_uuid: UUID; code: number; full_name: string }[]> {
+  public async getLocationByCity(request: LocationByCityDto): Promise<LocationByCityResponseDto[]> {
     await this.authService.authenticate();
     const { data } = await this.client.get(`/location/suggest/cities`, {
       headers: { Authorization: `Bearer ${this.authService.getToken()}` },
       params: { name: request.name, country_code: request.country_code },
     });
-    return data as any;
+    return data as LocationByCityResponseDto[];
   }
 
-  public async getCitysList(request: {
-    country_codes: Array<string>;
-    region_code: number;
-    size: number;
-    page: number;
-    lang: string;
-  }): Promise<{ 
-    code: number; 
-    city_uuid: UUID; 
-    city: string; 
-    country_code: string; 
-    country: string; 
-    region: string; 
-    payment_limit: number }[]> {
+  public async getCitysList(request: CitysListDto): Promise<CityListResponseDto[]> {
     await this.authService.authenticate();
     const { data } = await this.client.get(
       `/location/cities`,
@@ -54,7 +39,7 @@ export class CdekLocationService {
         },
       }
     );
-    return data as any;
+    return data as CityListResponseDto[];
   }
 
   //Выяснить, в чем проблема со списком регионов
